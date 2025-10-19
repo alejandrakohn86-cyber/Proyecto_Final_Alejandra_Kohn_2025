@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Mi Sistema de Clientes{% endblock %}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        nav {
+            background-color: #3c8cf5c9;
+            padding: 10px;
+        }
+        nav a {
+            color: rgb(255, 253, 253);
+            margin-right: 15px;
+            text-decoration: none;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            flex: 1;
+            padding-bottom: 40px;
+        }
+        footer {
+            background-color: #000000;
+            color: #ffffff;
+            padding: 20px 10px;
+            text-align: center;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="{% url 'clientes_app:index' %}">Inicio</a>
+        <a href="{% url 'pages:page-list' %}">Blog</a>
+        <a href="{% url 'pages:about' %}">Acerca de mí</a>
+        <a href="{% url 'clientes_app:cliente-list' %}">Clientes</a>
+        <a href="{% url 'clientes_app:cliente-corporativo-list' %}">Clientes Corporativos</a>
+        <a href="{% url 'clientes_app:producto-list' %}">Productos</a>
+        <a href="{% url 'clientes_app:buscar-producto' %}">Búsqueda</a>
+        
+        {% if user.is_authenticated %}
+            <a href="{% url 'messenger:inbox' %}">💬 Mensajes</a>
+            <a href="{% url 'accounts:perfil' %}">👤 {{ user.username }}</a>
+            <a href="{% url 'accounts:logout' %}">Cerrar Sesión</a>
+        {% else %}
+            <a href="{% url 'accounts:login' %}">Iniciar Sesión</a>
+            <a href="{% url 'accounts:registro' %}">Registrarse</a>
+        {% endif %}
+    </nav>
+
+    <div class="container">
+        <h1>{% block header %}{% endblock %}</h1>
+        
+        {% block content %}{% endblock %}
+    </div>
+
+    <footer>
+        <p>Sistema de Gestión de Clientes y Productos - CoderHouse Python - 👨🏻‍💻 Sebastián Hidalgo</p>
+    </footer>
+</body>
+</html>

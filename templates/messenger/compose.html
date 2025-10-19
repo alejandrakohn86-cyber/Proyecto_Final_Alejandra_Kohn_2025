@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}Nuevo Mensaje{% endblock %}
+
+{% block header %}✉️ Escribir Mensaje{% endblock %}
+
+{% block content %}
+<div style="max-width: 700px; margin: 0 auto;">
+    <form method="post">
+        {% csrf_token %}
+        
+        <div style="margin-bottom: 15px;">
+            <label for="{{ form.destinatario.id_for_label }}">Para:</label>
+            {{ form.destinatario }}
+            {% if form.destinatario.errors %}
+                <div style="color: red; font-size: 12px;">{{ form.destinatario.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label for="{{ form.asunto.id_for_label }}">Asunto:</label>
+            {{ form.asunto }}
+            {% if form.asunto.errors %}
+                <div style="color: red; font-size: 12px;">{{ form.asunto.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label for="{{ form.contenido.id_for_label }}">Mensaje:</label>
+            {{ form.contenido }}
+            {% if form.contenido.errors %}
+                <div style="color: red; font-size: 12px;">{{ form.contenido.errors }}</div>
+            {% endif %}
+        </div>
+
+        <button type="submit" style="background-color: #3c8cf5; color: white; padding: 10px 20px; border: none; cursor: pointer; border-radius: 5px;">Enviar Mensaje</button>
+        <a href="{% url 'messenger:inbox' %}" style="background-color: #ccc; color: black; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin-left: 10px;">Cancelar</a>
+    </form>
+</div>
+
+<style>
+    select, input[type="text"], textarea {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+    textarea {
+        font-family: Arial, sans-serif;
+    }
+</style>
+{% endblock %}

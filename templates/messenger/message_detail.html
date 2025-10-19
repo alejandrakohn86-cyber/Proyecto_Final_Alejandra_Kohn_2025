@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ mensaje.asunto }}{% endblock %}
+
+{% block header %}Mensaje{% endblock %}
+
+{% block content %}
+<div style="max-width: 800px; margin: 0 auto;">
+    <div style="border: 1px solid #ddd; padding: 25px; border-radius: 10px; background-color: white;">
+        <h2 style="margin-top: 0; color: #333;">{{ mensaje.asunto }}</h2>
+        
+        <div style="border-bottom: 1px solid #ddd; padding-bottom: 15px; margin-bottom: 20px;">
+            <p style="margin: 5px 0; color: #666;">
+                <strong>De:</strong> {{ mensaje.remitente.get_full_name|default:mensaje.remitente.username }} 
+                <span style="color: #999;">({{ mensaje.remitente.username }})</span>
+            </p>
+            <p style="margin: 5px 0; color: #666;">
+                <strong>Para:</strong> {{ mensaje.destinatario.get_full_name|default:mensaje.destinatario.username }}
+                <span style="color: #999;">({{ mensaje.destinatario.username }})</span>
+            </p>
+            <p style="margin: 5px 0; color: #666;">
+                <strong>Fecha:</strong> {{ mensaje.fecha_envio|date:"d/m/Y H:i" }}
+            </p>
+            {% if mensaje.leido %}
+                <p style="margin: 5px 0; color: #27ae60;">
+                    ✓ Leído
+                </p>
+            {% endif %}
+        </div>
+        
+        <div style="line-height: 1.6; color: #333; white-space: pre-wrap;">{{ mensaje.contenido }}</div>
+    </div>
+    
+    <div style="margin-top: 20px;">
+        <a href="{% url 'messenger:inbox' %}" style="background-color: #666; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin-right: 10px;">← Volver</a>
+        
+        {% if user == mensaje.destinatario %}
+            <a href="{% url 'messenger:compose-reply' mensaje.pk %}" style="background-color: #3c8cf5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin-right: 10px;">↩️ Responder</a>
+            <a href="{% url 'messenger:message-delete' mensaje.pk %}" style="background-color: #e74c3c; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">Borrar</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

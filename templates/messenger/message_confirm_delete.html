@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Borrar Mensaje{% endblock %}
+
+{% block header %}Confirmar Borrado{% endblock %}
+
+{% block content %}
+<div style="max-width: 600px; margin: 0 auto; text-align: center;">
+    <div style="background-color: #fff3cd; padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #ffc107;">
+        <h3 style="color: #856404; margin-top: 0;">⚠️ ¿Estás seguro?</h3>
+        <p style="color: #856404;">Esta acción no se puede deshacer.</p>
+    </div>
+    
+    <div style="background-color: #f5f5f5; padding: 20px; border-radius: 10px; margin-bottom: 20px; text-align: left;">
+        <h4>Vas a borrar este mensaje:</h4>
+        <p><strong>Asunto:</strong> {{ mensaje.asunto }}</p>
+        <p><strong>De:</strong> {{ mensaje.remitente.get_full_name|default:mensaje.remitente.username }}</p>
+        <p><strong>Fecha:</strong> {{ mensaje.fecha_envio|date:"d/m/Y H:i" }}</p>
+        <div style="margin-top: 10px; padding: 10px; background-color: white; border-radius: 5px;">
+            {{ mensaje.contenido|truncatewords:30 }}
+        </div>
+    </div>
+    
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" style="background-color: #e74c3c; color: white; padding: 12px 30px; border: none; cursor: pointer; border-radius: 5px; font-size: 16px; margin-right: 10px;">Sí, borrar mensaje</button>
+        <a href="{% url 'messenger:inbox' %}" style="background-color: #666; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block; font-size: 16px;">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

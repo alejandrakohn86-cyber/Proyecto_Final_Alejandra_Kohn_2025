@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Nuevo Cliente Corporativo{% endblock %}
+
+{% block header %}Registro de Cliente Corporativo{% endblock %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        
+        <div>
+            <label for="{{ form.cliente.id_for_label }}">Cliente Asociado:</label>
+            {{ form.cliente }}
+            <small><i>Seleccione el cliente que será el representante legal.</i></small>
+        </div>
+        <br>
+        <div>
+            <label for="{{ form.razon_social.id_for_label }}">Razón Social:</label>
+            {{ form.razon_social }}
+        </div>
+        <br>
+        <div>
+            <label for="{{ form.nombre_fantasia.id_for_label }}">Nombre Fantasía:</label>
+            {{ form.nombre_fantasia }}
+        </div>
+        <br>
+        <div>
+            <label for="{{ form.cuit.id_for_label }}">CUIT:</label>
+            {{ form.cuit }}
+        </div>
+        <br>
+        <button type="submit">Guardar Cliente Corporativo</button>
+    </form>
+    
+    <br>
+    <a href="{% url 'clientes_app:cliente-corporativo-list' %}">Volver al listado</a>
+{% endblock %}

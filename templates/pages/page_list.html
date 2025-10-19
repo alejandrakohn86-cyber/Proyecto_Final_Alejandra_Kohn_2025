@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Blog - Páginas{% endblock %}
+
+{% block header %}Blog{% endblock %}
+
+{% block content %}
+<div style="margin-bottom: 20px;">
+    {% if user.is_authenticated %}
+        <a href="{% url 'pages:page-create' %}" style="background-color: #3c8cf5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">+ Nueva Página</a>
+    {% endif %}
+</div>
+
+{% if messages %}
+    {% for message in messages %}
+        <div style="padding: 10px; margin-bottom: 10px; background-color: #ddffdd; border-radius: 5px;">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+{% if pages %}
+    {% for page in pages %}
+        <div style="border: 1px solid #ddd; padding: 20px; margin-bottom: 20px; border-radius: 5px;">
+            <h2 style="margin-top: 0;">{{ page.titulo }}</h2>
+            {% if page.subtitulo %}
+                <h4 style="color: #666; margin-top: -10px;">{{ page.subtitulo }}</h4>
+            {% endif %}
+            
+            {% if page.imagen %}
+                <img src="{{ page.imagen.url }}" alt="{{ page.titulo }}" style="max-width: 100%; max-height: 400px; width: auto; height: auto; object-fit: cover; margin-bottom: 15px; border-radius: 5px; display: block;">
+            {% endif %}
+            
+            <p style="color: #666; font-size: 14px;">
+                Por {{ page.autor.get_full_name|default:page.autor.username }} | {{ page.fecha_creacion|date:"d/m/Y H:i" }}
+            </p>
+            
+            <div style="margin-bottom: 15px;">
+                {{ page.contenido|truncatewords_html:30|safe }}
+            </div>
+            
+            <div>
+                <a href="{% url 'pages:page-detail' page.pk %}" style="background-color: #3c8cf5; color: white; padding: 8px 15px; text-decoration: none; border-radius: 5px; display: inline-block; margin-right: 10px;">Leer más</a>
+                
+                {% if user.is_authenticated %}
+                    <a href="{% url 'pages:page-update' page.pk %}" style="background-color: #f5a623; color: white; padding: 8px 15px; text-decoration: none; border-radius: 5px; display: inline-block; margin-right: 10px;">Editar</a>
+                    <a href="{% url 'pages:page-delete' page.pk %}" style="background-color: #e74c3c; color: white; padding: 8px 15px; text-decoration: none; border-radius: 5px; display: inline-block;">Borrar</a>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+{% else %}
+    <div style="text-align: center; padding: 40px; background-color: #f5f5f5; border-radius: 10px;">
+        <h3>No hay páginas aún</h3>
+        <p>Sé el primero en crear una página.</p>
+        {% if user.is_authenticated %}
+            <a href="{% url 'pages:page-create' %}" style="background-color: #3c8cf5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin-top: 10px;">+ Crear primera página</a>
+        {% endif %}
+    </div>
+{% endif %}
+{% endblock %}

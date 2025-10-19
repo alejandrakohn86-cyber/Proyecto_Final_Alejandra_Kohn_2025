@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %}Registro{% endblock %}
+
+{% block header %}Crear Cuenta{% endblock %}
+
+{% block content %}
+<div style="max-width: 500px; margin: 0 auto;">
+    {% if messages %}
+        {% for message in messages %}
+            <div style="padding: 10px; margin-bottom: 10px; background-color: #ddffdd; border-radius: 5px;">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        
+        <div style="margin-bottom: 15px;">
+            <label for="{{ form.username.id_for_label }}">Usuario:</label>
+            {{ form.username }}
+            {% if form.username.errors %}
+                <div style="color: red; font-size: 12px;">{{ form.username.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label for="{{ form.email.id_for_label }}">Email:</label>
+            {{ form.email }}
+            {% if form.email.errors %}
+                <div style="color: red; font-size: 12px;">{{ form.email.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label for="{{ form.first_name.id_for_label }}">Nombre:</label>
+            {{ form.first_name }}
+            {% if form.first_name.errors %}
+                <div style="color: red; font-size: 12px;">{{ form.first_name.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label for="{{ form.last_name.id_for_label }}">Apellido:</label>
+            {{ form.last_name }}
+            {% if form.last_name.errors %}
+                <div style="color: red; font-size: 12px;">{{ form.last_name.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label for="{{ form.password1.id_for_label }}">Contraseña:</label>
+            {{ form.password1 }}
+            {% if form.password1.errors %}
+                <div style="color: red; font-size: 12px;">{{ form.password1.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label for="{{ form.password2.id_for_label }}">Confirmar Contraseña:</label>
+            {{ form.password2 }}
+            {% if form.password2.errors %}
+                <div style="color: red; font-size: 12px;">{{ form.password2.errors }}</div>
+            {% endif %}
+        </div>
+
+        <button type="submit" style="background-color: #3c8cf5; color: white; padding: 10px 20px; border: none; cursor: pointer;">Registrarse</button>
+    </form>
+    
+    <p style="margin-top: 20px;">¿Ya tenés cuenta? <a href="{% url 'accounts:login' %}">Iniciá sesión aquí</a></p>
+</div>
+
+<style>
+    input[type="text"], input[type="email"], input[type="password"] {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+    }
+</style>
+{% endblock %}

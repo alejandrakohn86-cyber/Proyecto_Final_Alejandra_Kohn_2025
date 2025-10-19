@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if object %}Editar{% else %}Crear{% endif %} Página{% endblock %}
+
+{% block header %}{% if object %}Editar{% else %}Crear{% endif %} Página{% endblock %}
+
+{% block content %}
+<div style="max-width: 800px; margin: 0 auto;">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div style="margin-bottom: 15px;">
+            <label for="{{ form.titulo.id_for_label }}">Título:</label>
+            {{ form.titulo }}
+            {% if form.titulo.errors %}
+                <div style="color: red; font-size: 12px;">{{ form.titulo.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label for="{{ form.subtitulo.id_for_label }}">Subtítulo:</label>
+            {{ form.subtitulo }}
+            {% if form.subtitulo.errors %}
+                <div style="color: red; font-size: 12px;">{{ form.subtitulo.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label for="{{ form.contenido.id_for_label }}">Contenido:</label>
+            {{ form.contenido }}
+            {% if form.contenido.errors %}
+                <div style="color: red; font-size: 12px;">{{ form.contenido.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label for="{{ form.imagen.id_for_label }}">Imagen:</label>
+            {% if object and object.imagen %}
+                <div style="margin-bottom: 10px;">
+                    <img src="{{ object.imagen.url }}" alt="Imagen actual" style="max-width: 300px; height: auto; border-radius: 5px;">
+                    <p style="font-size: 12px; color: #666;">Imagen actual</p>
+                </div>
+            {% endif %}
+            {{ form.imagen }}
+            {% if form.imagen.errors %}
+                <div style="color: red; font-size: 12px;">{{ form.imagen.errors }}</div>
+            {% endif %}
+        </div>
+
+        <button type="submit" style="background-color: #3c8cf5; color: white; padding: 10px 20px; border: none; cursor: pointer; border-radius: 5px;">{% if object %}Actualizar{% else %}Crear{% endif %} Página</button>
+        <a href="{% url 'pages:page-list' %}" style="background-color: #ccc; color: black; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin-left: 10px;">Cancelar</a>
+    </form>
+</div>
+
+<style>
+    input[type="text"], textarea {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+    }
+</style>
+
+{{ form.media }}
+{% endblock %}

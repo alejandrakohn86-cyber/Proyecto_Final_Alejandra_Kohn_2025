@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Nuevo Cliente{% endblock %}
+
+{% block header %}Registro de Cliente{% endblock %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        
+        <div>
+            <label for="{{ form.nombre.id_for_label }}">Nombre:</label>
+            {{ form.nombre }}
+        </div>
+        <br>
+        <div>
+            <label for="{{ form.apellido.id_for_label }}">Apellido:</label>
+            {{ form.apellido }}
+        </div>
+        <br>
+        <div>
+            <label for="{{ form.documento.id_for_label }}">Documento:</label>
+            {{ form.documento }}
+        </div>
+        <br>
+        <div>
+            <label for="{{ form.domicilio.id_for_label }}">Domicilio:</label>
+            {{ form.domicilio }}
+        </div>
+        <br>
+        <div>
+            <label for="{{ form.telefono.id_for_label }}">Teléfono:</label>
+            {{ form.telefono }}
+        </div>
+        <br>
+        <div>
+            <label for="{{ form.tipo.id_for_label }}">Tipo de Cliente:</label>
+            {{ form.tipo }}
+        </div>
+        <br>
+        <button type="submit">Guardar Cliente</button>
+    </form>
+    
+    <br>
+    <a href="{% url 'clientes_app:cliente-list' %}">Volver al listado</a>
+{% endblock %}
